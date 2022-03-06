@@ -31,8 +31,9 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
 
-	//크롤링
+	//크롤링(html파싱)
 	implementation 'org.jsoup:jsoup:1.14.2'
+	implementation 'org.seleniumhq.selenium:selenium-java:4.1.2'
 }
 
 tasks.named('test') {
