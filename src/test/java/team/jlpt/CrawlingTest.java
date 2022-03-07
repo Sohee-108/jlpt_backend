@@ -1,6 +1,7 @@
 package team.jlpt;
 
 import org.junit.jupiter.api.Test;
+import team.jlpt.util.Crawling;
 
 public class CrawlingTest {
 
