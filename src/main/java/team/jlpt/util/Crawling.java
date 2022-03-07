@@ -1,5 +1,6 @@
 package team.jlpt.util;
 
+import lombok.Getter;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -14,15 +15,14 @@ import java.util.*;
 
 @Component
 public class Crawling {
-    private String[] words;
+    private List<String> words;
     private WebDriver driver;
+    @Getter
+    private List<Problem> problems = new ArrayList<>();
 
-    public Crawling(String[] words) {
+
+    public void init(List<String> words){
         this.words = words;
-    }
-
-
-    public void init(){
         System.setProperty("webdriver.chrome.driver", "D:\\projectEn\\jlpt\\jlpt_backend\\chromedriver\\chromedriver.exe");
 
         //속도개선
@@ -32,8 +32,6 @@ public class Crawling {
         options.addArguments("--disable-gpu");
         options.addArguments("--blink-settings=imagesEnabled=false"); //이미지 다운 안받을거야.
         driver = new ChromeDriver(options);
-
-        List<Problem> problems = new ArrayList<>();
 
         try{
             for (String word : words) {
@@ -88,6 +86,7 @@ public class Crawling {
         }
 
         rubyProcess(problem);
+        blankProcess(problem);
         return problem;
     }
 
@@ -110,6 +109,15 @@ public class Crawling {
             problem.setAnswer(replaceAnswer);
         }
 
+    }
+
+
+    private void blankProcess(Problem problem) {
+        String replace = problem.getSentence().replace(
+                problem.getAnswer(), " (_____) "
+        );
+
+        problem.setSentence(replace);
     }
 
 

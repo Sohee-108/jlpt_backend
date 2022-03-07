@@ -3,6 +3,8 @@ package team.jlpt;
 import org.junit.jupiter.api.Test;
 import team.jlpt.util.Crawling;
 
+import java.util.Arrays;
+
 public class CrawlingTest {
 
     @Test
@@ -14,14 +16,14 @@ public class CrawlingTest {
     @Test
     void test(){
         String[] words = {"腕を磨く"};
-        Crawling crawling = new Crawling(words);
-        crawling.init();
+        Crawling crawling = new Crawling();
+        crawling.init(Arrays.asList(words));
     }
 
     @Test
     void testList(){
         String[] words = {"科学", "都会", "不味い", "返す", "後", "包む", "守る", "経済", "かなり", "引"};
-        Crawling crawling = new Crawling(words);
-        crawling.init();
+        Crawling crawling = new Crawling();
+        crawling.init(Arrays.asList(words));
     }
 }
