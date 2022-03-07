@@ -1,4 +1,4 @@
-package team.jlpt;
+package team.jlpt.entity;
 
 import lombok.Getter;
 import lombok.Setter;

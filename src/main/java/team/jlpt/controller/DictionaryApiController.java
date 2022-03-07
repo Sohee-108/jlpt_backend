@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import team.jlpt.dto.DictionaryDTO;
+import team.jlpt.entity.Problem;
 import team.jlpt.service.DictionaryService;
-import team.jlpt.util.Crawling;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,16 +18,19 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @RequestMapping("/api/learn")
 public class DictionaryApiController {
-    private final Crawling crawling;
-    private final DictionaryService learnService;
+    private final DictionaryService dictionaryService;
 
     @GetMapping({"/today/{memberId}", "/today/{memberId}/{count}"})
     public ResponseEntity todayWords(@PathVariable Long memberId,
                                      @PathVariable Optional<Integer> count
     ){
-        List<DictionaryDTO.Response> todayWords = learnService.getTodayWords(memberId, count);
+        List<DictionaryDTO.Response> todayWords = dictionaryService.getTodayWords(memberId, count);
         return ResponseEntity.status(HttpStatus.OK).body(todayWords);
     }
 
-
+    @GetMapping("/test/{memberId}")
+    public ResponseEntity test(@PathVariable Long memberId){
+        List<Problem> todayTest = dictionaryService.getTodayTest(memberId);
+        return ResponseEntity.status(HttpStatus.OK).body(todayTest);
+    }
 }
