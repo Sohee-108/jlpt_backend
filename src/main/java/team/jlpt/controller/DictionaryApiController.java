@@ -16,7 +16,7 @@ import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/learn")
+@RequestMapping("/api/dictionary")
 public class DictionaryApiController {
     private final DictionaryService dictionaryService;
 
