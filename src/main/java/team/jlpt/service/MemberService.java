@@ -1,15 +1,11 @@
 package team.jlpt.service;
 
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.BindingResult;
 import team.jlpt.dto.MemberDTO;
 import team.jlpt.entity.Member;
 import team.jlpt.repository.MemberRepository;
-
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor

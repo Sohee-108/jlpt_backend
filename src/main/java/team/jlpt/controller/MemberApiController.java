@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import team.jlpt.dto.MemberDTO;
 import team.jlpt.service.MemberService;
 
-
 @RestController
 @RequestMapping("/api/member")
 @RequiredArgsConstructor
