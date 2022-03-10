@@ -58,5 +58,6 @@ public class MemberApiController {
         memberService.delete(memberId);
         return ResponseEntity.status(HttpStatus.OK).body(null);
     }
+
 }
 

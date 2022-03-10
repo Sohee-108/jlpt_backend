@@ -9,9 +9,9 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 import team.jlpt.auth.userinfo.GoogleUserInfo;
 import team.jlpt.auth.userinfo.KakaoUserInfo;
+import team.jlpt.auth.userinfo.NaverUserInfo;
 import team.jlpt.auth.userinfo.OAuth2UserInfo;
 import team.jlpt.entity.Member;
-import team.jlpt.entity.Role;
 import team.jlpt.repository.MemberRepository;
 
 import java.util.UUID;
@@ -24,17 +24,21 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
+
         OAuth2User oAuth2User = super.loadUser(userRequest);
 
         OAuth2UserInfo oAuth2UserInfo = null;
         String provider = userRequest.getClientRegistration().getRegistrationId();  //google
+        System.out.println(provider);
 
         if(provider.equals("google")){
             oAuth2UserInfo = new GoogleUserInfo(oAuth2User.getAttributes());
         }else if(provider.equals("kakao")){
             oAuth2UserInfo = new KakaoUserInfo(oAuth2User.getAttributes());
-        }
 
+        }else if(provider.equals("naver")){
+            oAuth2UserInfo = new NaverUserInfo(oAuth2User.getAttributes());
+        }
 
         String providerId = oAuth2UserInfo.getProviderId();
         String name = provider + "_" + providerId;
