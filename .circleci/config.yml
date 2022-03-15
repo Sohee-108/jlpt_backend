@@ -6,8 +6,15 @@ jobs:
     docker:
       - image: circleci/openjdk:11-jdk
       - image: circleci/postgres:11
+        environment:
+          POSTGRES_HOST_AUTH_METHOD: trust
     steps:
       - checkout  # check out the code in the project directory
-      - run: echo "hello world"
+      - run:
+          command: |
+            git clone -b crawling --single-branch https://github.com/Sohee-108/jlpt_backend.git
+            pwd
+            ls -al
+
       #- run: gradle dependencies
       #- run: gradle test
