@@ -1,8 +1,11 @@
 
-version: 2
+version: 2.1
+orbs:
+  aws-s3: circleci/aws-s3@1.0.13
+    aws-code-deploy: circleci/aws-code-deploy@0.0.12
 
 jobs:
-  build:
+  build_and_deploy:
     docker:
       - image: circleci/openjdk:11-jdk
       - image: circleci/postgres:11
@@ -11,10 +14,42 @@ jobs:
     steps:
       - checkout  # check out the code in the project directory
       - run:
+          name: gradlew 권한 부여
+          command: chmod +x ./gradlew
+      - run:
+          name: gradle 빌드
+          command: ./gradlew build
+      - run:
+          name: before_deploy
           command: |
-            git clone -b crawling --single-branch https://github.com/Sohee-108/jlpt_backend.git
-            pwd
+            zip -r *
             ls -al
+#            mv springboot2-webservice.zip deploy/springboot2-webservice.zip
 
-      #- run: gradle dependencies
-      #- run: gradle test
+#      - aws-s3/copy:
+#          from: deploy/*
+#          to: 's3://hwany-springboot-build'
+#          aws-region: AWS_DEFAULT_REGION
+#
+#      - aws-code-deploy/deploy-bundle:
+#          application-name: hwany-springboot2-webservice
+#          deployment-group: hwany-springboot2-webservice-group
+#          deployment-config: CodeDeployDefault.AllAtOnce
+#          bundle-bucket: hwany-springboot-build
+#          bundle-key: springboot2-webservice # Travis CI와 다르게 확장자는 제거해야 합니다.
+#          bundle-type: zip # default
+
+
+#workflows:
+#  version: 2.1
+#
+#  build-deploy:
+#    jobs:
+#      - build
+#      - deploy:
+#          requires:
+#            - build
+#          filters:
+#            branches:
+#              only: master
+
