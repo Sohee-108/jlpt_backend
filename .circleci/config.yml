@@ -8,9 +8,14 @@ jobs:
   build:
     docker:
       - image: circleci/openjdk:11-jdk
-      - image: circleci/postgres:11
+      - image: cimg/postgres:14.0
+        auth:
+          username: mydockerhub-user
+          password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
         environment:
-          POSTGRES_HOST_AUTH_METHOD: trust
+          POSTGRES_USER: ${MY_POSTGRES_USER}
+          POSTGRES_PASSWORD: ${MY_POSTGRES_PASSWORD}
+          POSTGRES_DB: jlpt
     steps:
       - checkout  # check out the code in the project directory
       - run:
