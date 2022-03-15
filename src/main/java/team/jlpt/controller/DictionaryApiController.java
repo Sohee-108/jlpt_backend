@@ -16,11 +16,11 @@ import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/dic")
+@RequestMapping("/api/dictionary")
 public class DictionaryApiController {
     private final DictionaryService dictionaryService;
 
-    @GetMapping({"/words/{memberId}", "/words/{memberId}/{count}"})
+    @GetMapping({"/today/{memberId}", "/today/{memberId}/{count}"})
     public ResponseEntity todayWords(@PathVariable Long memberId,
                                      @PathVariable Optional<Integer> count
     ){
