@@ -5,7 +5,7 @@ orbs:
   aws-code-deploy: circleci/aws-code-deploy@0.0.12
 
 jobs:
-  build_and_deploy:
+  build:
     docker:
       - image: circleci/openjdk:11-jdk
       - image: circleci/postgres:11
@@ -19,6 +19,12 @@ jobs:
       - run:
           name: gradle 빌드
           command: ./gradlew build
+  deploy:
+    docker:
+      - image: circleci/openjdk:11-jdk
+      - image: circleci/postgres:11
+        environment:
+          POSTGRES_HOST_AUTH_METHOD: trust
       - run:
           name: before_deploy
           command: |
@@ -40,15 +46,15 @@ jobs:
 #          bundle-type: zip # default
 
 
-#workflows:
-#  version: 2.1
-#
-#  build-deploy:
-#    jobs:
-#      - build
-#      - deploy:
-#          requires:
-#            - build
+workflows:
+  version: 2.1
+
+  build-deploy:
+    jobs:
+      - build
+      - deploy:
+          requires:
+            - build
 #          filters:
 #            branches:
 #              only: master
