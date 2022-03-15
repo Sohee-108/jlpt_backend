@@ -25,6 +25,8 @@ jobs:
       - image: circleci/postgres:11
         environment:
           POSTGRES_HOST_AUTH_METHOD: trust
+    steps:
+      - checkout  # check out the code in the project directory
       - run:
           name: before_deploy
           command: |
