@@ -21,7 +21,7 @@ jobs:
             sudo apt-get update && apt-get install postgresql postgresql-contrib
       - run:
           name: psql 설정
-            command: psql --username=postgres
+          command: psql --username=postgres
       - run:
           name: gradlew 권한 부여
           command: chmod +x ./gradlew
