@@ -46,6 +46,7 @@ jobs:
       - run:
           name: before_deploy
           command: |
+            ls -al
             zip -r *
             ls -al
 #            mv springboot2-webservice.zip deploy/springboot2-webservice.zip
