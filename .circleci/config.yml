@@ -18,7 +18,7 @@ jobs:
       - run:
           name: psql 설치
           command:
-            sudo apt-get update && apt-get install postgresql postgresql-contrib
+            sudo apt-get update && sudo apt-get install postgresql postgresql-contrib
       - run:
           name: psql 설정
           command: psql --username=postgres
