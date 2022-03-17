@@ -8,17 +8,25 @@ jobs:
   build:
     docker:
       - image: circleci/openjdk:11-jdk
+        environment:
+          DATABASE_URL: ${MY_POSTGRES_URL}
+#          DATABASE_USER: ${MY_POSTGRES_USER}
+#          DATABASE_PASSWORD: ${MY_POSTGRES_PASSWORD}
       - image: cimg/postgres:14.0
         environment:
           POSTGRES_USER: ${MY_POSTGRES_USER}
           POSTGRES_PASSWORD: ${MY_POSTGRES_PASSWORD}
-          POSTGRES_DB: jlpt
+
     steps:
       - checkout  # check out the code in the project directory
-      - run:
-          name: psql 설치
-          command:
-            sudo apt-get update && sudo apt-get install postgresql postgresql-contrib
+#      - run:
+#          name: psql 설치
+#          command:
+#            sudo apt-get update && sudo apt-get install postgresql postgresql-contrib
+#      - run:
+#          name: psql 설정
+#          command: |
+#            sudo psql --username=postgres
       - run:
           name: gradlew 권한 부여
           command: chmod +x ./gradlew
