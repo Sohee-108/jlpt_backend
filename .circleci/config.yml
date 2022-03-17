@@ -35,12 +35,7 @@ jobs:
           command: ./gradlew build
   deploy:
     docker:
-      - image: circleci/openjdk:11-jdk
-      - image: cimg/postgres:14.0
-        environment:
-          POSTGRES_USER: ${MY_POSTGRES_USER}
-          POSTGRES_PASSWORD: ${MY_POSTGRES_PASSWORD}
-          POSTGRES_DB: jlpt
+      - image: circleci/python:2.7
     steps:
       - checkout  # check out the code in the project directory
       - run:
