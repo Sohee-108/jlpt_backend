@@ -56,15 +56,12 @@ jobs:
           bundle-type: zip # default
 
 
-#workflows:
-#  version: 2.1
-#
-#  build-deploy:
-#    jobs:
-#      - build
-#      - deploy:
-#          requires:
-#            - build
+workflows:
+  version: 2.1
+
+  build-deploy:
+    jobs:
+      - build_deploy
 #          filters:
 #            branches:
 #              only: master
