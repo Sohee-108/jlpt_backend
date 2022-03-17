@@ -16,13 +16,13 @@ jobs:
     steps:
       - checkout  # check out the code in the project directory
       - run:
-          name: docker 컨테이너 접속
+          name: psql 설치
           command:
-            docker exec -it postgres /bin/bash
+            sudo apt-get update && sudo apt-get install postgresql postgresql-contrib
       - run:
           name: psql 설정
           command: |
-            psql --username=postgres
+            sudo psql --username=postgres
       - run:
           name: gradlew 권한 부여
           command: chmod +x ./gradlew
