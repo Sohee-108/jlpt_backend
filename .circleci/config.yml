@@ -21,7 +21,7 @@ jobs:
             sudo apt-get update && sudo apt-get install postgresql postgresql-contrib
       - run:
           name: wsl 설치
-          command:
+          command: | #명령어 여러줄
             sudo apt-get install cgroupfs-mount
             sudo cgroupfs-mount
             sudo service docker start
