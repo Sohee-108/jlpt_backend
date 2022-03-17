@@ -4,8 +4,8 @@ orbs:
   aws-s3: circleci/aws-s3@1.0.13
   aws-code-deploy: circleci/aws-code-deploy@0.0.12
 
-executors:
-  my-executor:
+jobs:
+  build_deploy:
     docker:
       - image: circleci/python:2.7
       - image: circleci/openjdk:11-jdk
@@ -17,10 +17,6 @@ executors:
         environment:
           POSTGRES_USER: ${MY_POSTGRES_USER}
           POSTGRES_PASSWORD: ${MY_POSTGRES_PASSWORD}
-
-jobs:
-  build:
-    executor: my-executor
 
     steps:
       - checkout  # check out the code in the project directory
@@ -38,11 +34,7 @@ jobs:
       - run:
           name: gradle 빌드
           command: ./gradlew build
-  deploy:
-    executor: my-executor
 
-    steps:
-      - checkout  # check out the code in the project directory
       - run:
           name: before_deploy
           command: |
@@ -64,15 +56,15 @@ jobs:
           bundle-type: zip # default
 
 
-workflows:
-  version: 2.1
-
-  build-deploy:
-    jobs:
-      - build
-      - deploy:
-          requires:
-            - build
+#workflows:
+#  version: 2.1
+#
+#  build-deploy:
+#    jobs:
+#      - build
+#      - deploy:
+#          requires:
+#            - build
 #          filters:
 #            branches:
 #              only: master
