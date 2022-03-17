@@ -46,23 +46,22 @@ jobs:
       - run:
           name: before_deploy
           command: |
-            ls -al
-            zip -r *
-            ls -al
-#            mv springboot2-webservice.zip deploy/springboot2-webservice.zip
+            zip back.zip -r ./*
+            mkdir -p deploy
+            mv back.zip deploy/back.zip
 
-#      - aws-s3/copy:
-#          from: deploy/*
-#          to: 's3://hwany-springboot-build'
-#          aws-region: AWS_DEFAULT_REGION
-#
-#      - aws-code-deploy/deploy-bundle:
-#          application-name: hwany-springboot2-webservice
-#          deployment-group: hwany-springboot2-webservice-group
-#          deployment-config: CodeDeployDefault.AllAtOnce
-#          bundle-bucket: hwany-springboot-build
-#          bundle-key: springboot2-webservice # Travis CI와 다르게 확장자는 제거해야 합니다.
-#          bundle-type: zip # default
+      - aws-s3/copy:
+          from: deploy/*
+          to: 's3://ec2-s3-codedeploy
+          aws-region: AWS_DEFAULT_REGION
+
+      - aws-code-deploy/deploy-bundle:
+          application-name: EC2CodeDeploy
+          deployment-group: JLPTGroup
+          deployment-config: CodeDeployDefault.AllAtOnce
+          bundle-bucket: ec2-s3-codedeploy
+          bundle-key: back # Travis CI와 다르게 확장자는 제거해야 합니다.
+          bundle-type: zip # default
 
 
 workflows:
