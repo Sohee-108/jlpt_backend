@@ -10,8 +10,8 @@ jobs:
       - image: circleci/openjdk:11-jdk
         environment:
           DATABASE_URL: ${MY_POSTGRES_URL}
-          DATABASE_USER: ${MY_POSTGRES_USER}
-          DATABASE_PASSWORD: ${MY_POSTGRES_PASSWORD}
+#          DATABASE_USER: ${MY_POSTGRES_USER}
+#          DATABASE_PASSWORD: ${MY_POSTGRES_PASSWORD}
       - image: cimg/postgres:14.0
         environment:
           POSTGRES_USER: ${MY_POSTGRES_USER}
