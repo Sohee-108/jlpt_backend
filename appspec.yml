@@ -1,0 +1,6 @@
+version: 0.0
+os: linux
+files:
+  - source: / # CodeDeploy에서 전달해 준 파일 중 destination으로 이동시킬>
+    destination: /home/ubuntu/jlpt        # source에서 지정된 파일을 받을>
+    overwrite: yes
