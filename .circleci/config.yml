@@ -20,8 +20,16 @@ jobs:
           command:
             sudo apt-get update && sudo apt-get install postgresql postgresql-contrib
       - run:
+          name: wsl 설치
+          command:
+            sudo apt-get install cgroupfs-mount
+            sudo cgroupfs-mount
+            sudo service docker start
+      - run:
           name: psql 설정
-          command: psql --username=postgres
+          command: |
+            sudo systemctl status postgresql
+#            psql --username=postgres
       - run:
           name: gradlew 권한 부여
           command: chmod +x ./gradlew
