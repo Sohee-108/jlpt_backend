@@ -4,19 +4,23 @@ orbs:
   aws-s3: circleci/aws-s3@1.0.13
   aws-code-deploy: circleci/aws-code-deploy@0.0.12
 
-jobs:
-  build_deploy:
+executors:
+  my-executor:
     docker:
-      - image: circleci/python:2.7
       - image: circleci/openjdk:11-jdk
         environment:
           DATABASE_URL: ${MY_POSTGRES_URL}
       #          DATABASE_USER: ${MY_POSTGRES_USER}
       #          DATABASE_PASSWORD: ${MY_POSTGRES_PASSWORD}
-      - image: cimg/postgres:14.0
-        environment:
-          POSTGRES_USER: ${MY_POSTGRES_USER}
-          POSTGRES_PASSWORD: ${MY_POSTGRES_PASSWORD}
+#      - image: cimg/postgres:14.0
+#        environment:
+#          POSTGRES_USER: ${MY_POSTGRES_USER}
+#          POSTGRES_PASSWORD: ${MY_POSTGRES_PASSWORD}
+#      - image: circleci/python:2.7
+
+jobs:
+  build:
+    executor: my-executor
 
     steps:
       - checkout  # check out the code in the project directory
@@ -34,7 +38,11 @@ jobs:
       - run:
           name: gradle 빌드
           command: ./gradlew build
+  deploy:
+    executor: my-executor
 
+    steps:
+      - checkout  # check out the code in the project directory
       - run:
           name: before_deploy
           command: |
@@ -61,7 +69,10 @@ workflows:
 
   build-deploy:
     jobs:
-      - build_deploy
+      - build
+      - deploy:
+          requires:
+            - build
 #          filters:
 #            branches:
 #              only: master
