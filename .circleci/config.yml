@@ -25,11 +25,7 @@ jobs:
           command: wget -N https://chromedriver.storage.googleapis.com/99.0.4844.51/chromedriver_linux64.zip
       - run:
           name: chromedriver 압축해제
-          command: |
-            unzip chromedriver_linux64.zip
-            ls -al
-            pwd
-            echo $MY_WEBDRIVER
+          command: unzip chromedriver_linux64.zip
       - run:
           name: gradlew 권한 부여
           command: chmod +x ./gradlew
