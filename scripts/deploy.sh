@@ -1,5 +1,7 @@
 #!/bin/bash
 
+sudo fuser -k -n tcp 80 || true
+
 cd /home/ubuntu/jlpt/build/libs
 
 nohup java -jar jlpt-0.0.1-SNAPSHOT.jar > /home/ubuntu/jlpt/nohup.out 2>&1 &
