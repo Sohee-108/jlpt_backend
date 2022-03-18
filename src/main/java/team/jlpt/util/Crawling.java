@@ -27,6 +27,7 @@ public class Crawling {
 
     public void init(List<String> words){
         this.words = words;
+        System.out.println(webDriverValue);
         System.setProperty("webdriver.chrome.driver", webDriverValue);
 
         //속도개선
