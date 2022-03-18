@@ -9,16 +9,10 @@ import team.jlpt.util.Crawling;
 
 import java.util.Arrays;
 
-@ActiveProfiles({"local"})
+//@ActiveProfiles({"local"})
 @SpringBootTest
 public class CrawlingTest {
     @Autowired private Crawling crawling;
-
-//    @Test
-//    void testExample(){
-//        CrawlingExample crawling = new CrawlingExample();
-//        crawling.init();
-//    }
 
     @Test
     void test(){
@@ -30,7 +24,6 @@ public class CrawlingTest {
 //    @Test
 //    void testList(){
 //        String[] words = {"科学", "都会", "不味い", "返す", "後", "包む", "守る", "経済", "かなり", "引"};
-//        Crawling crawling = new Crawling();
 //        crawling.init(Arrays.asList(words));
 //    }
 }
