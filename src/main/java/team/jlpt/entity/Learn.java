@@ -1,6 +1,7 @@
 package team.jlpt.entity;
 
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -21,4 +22,12 @@ public class Learn {
     private Dictionary dictionary;
 
     private boolean memorized;
+
+    @Builder
+    public Learn(Long id, Member member, Dictionary dictionary, boolean memorized) {
+        this.id = id;
+        this.member = member;
+        this.dictionary = dictionary;
+        this.memorized = memorized;
+    }
 }

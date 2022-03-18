@@ -4,12 +4,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import team.jlpt.entity.Dictionary;
 import team.jlpt.entity.Learn;
 
 import java.util.List;
 
 @Repository
-public interface DictionaryRepository extends JpaRepository<Learn, Long> {
+public interface DictionaryRepository extends JpaRepository<Dictionary, Long> {
 
 //    @Query("select d from Learn l right join l.dictionary d where l.id is null")
     @Query(nativeQuery = true, value = "select d.* " +

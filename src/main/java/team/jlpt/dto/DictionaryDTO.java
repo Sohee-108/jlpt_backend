@@ -5,6 +5,9 @@ import lombok.Getter;
 import lombok.ToString;
 import team.jlpt.repository.DictionaryProjection;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class DictionaryDTO {
     @Getter
     @ToString
@@ -22,5 +25,12 @@ public class DictionaryDTO {
                 .word(dictionary.getWord())
                 .meaning(dictionary.getMeaning())
                 .speak(dictionary.getSpeak()).build();
+    }
+
+    public static List<Response> entityToDtoList(List<DictionaryProjection> entityList){
+        List<DictionaryDTO.Response> todayWords = entityList.stream()
+                .map(dictionary -> DictionaryDTO.entityToDto(dictionary))
+                .collect(Collectors.toList());
+        return todayWords;
     }
 }

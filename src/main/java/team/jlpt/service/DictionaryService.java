@@ -2,7 +2,9 @@ package team.jlpt.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import team.jlpt.auth.PrincipalDetails;
 import team.jlpt.dto.DictionaryDTO;
+import team.jlpt.entity.Member;
 import team.jlpt.entity.Problem;
 import team.jlpt.repository.DictionaryProjection;
 import team.jlpt.repository.DictionaryRepository;
@@ -19,40 +21,41 @@ import java.util.stream.Collectors;
 public class DictionaryService {
     private final Crawling crawling;
     private final DictionaryRepository dictionaryRepository;
-    private Map<Long, List<String>> tempMemberMap = new HashMap<>();
 
     /**
      * 오늘의 단어 반환
      * 회원별 데이터 저장
      */
-    public List<DictionaryDTO.Response> getTodayWords(Long memberId, Optional<Integer> optionalCount) {
+    public List<DictionaryDTO.Response> getTodayWords(PrincipalDetails principalDetails, Optional<Integer> optionalCount) {
         int count = 10;
         if(optionalCount.isPresent()){
             count = optionalCount.get();
         }
-        List<DictionaryProjection> allNotMemorized = dictionaryRepository.findAllNotMemorized(memberId, count);
-        List<DictionaryDTO.Response> todayWords = allNotMemorized.stream()
-                .map(dictionary -> DictionaryDTO.entityToDto(dictionary))
-                .collect(Collectors.toList());
 
-        List<String> todayWordsString = todayWords.stream()
-                .map(todayWord -> todayWord.getWord())
-                .collect(Collectors.toList());
+        Member member = principalDetails.getMember();
+        List<DictionaryProjection> entityList = dictionaryRepository.findAllNotMemorized(member.getId(), count);
+        List<DictionaryDTO.Response> todayWordsResponse = DictionaryDTO.entityToDtoList(entityList);
 
-        tempMemberMap.put(memberId, todayWordsString);
-        //추후 PrincipalDetails에 넣어서 회원별 오늘의 단어 관리
-
-        return todayWords;
+        member.setTodayWordsResponse(todayWordsResponse);
+        return todayWordsResponse;
     }
 
 
     /**
      * 오늘의 단어 테스트 반환
      */
-    public List<Problem> getTodayTest(Long memberId) {
-        List<String> words = tempMemberMap.get(memberId);
-        crawling.init(words);
+    public List<Problem> getTodayTest(PrincipalDetails principalDetails) {
+        List<DictionaryDTO.Response> todayWordsResponse = principalDetails.getMember().getTodayWordsResponse();
+        List<String> list = todayWords(todayWordsResponse);
+        crawling.init(list);
         List<Problem> problems = crawling.getProblems();
         return problems;
+    }
+
+
+    private List<String> todayWords(List<DictionaryDTO.Response> todayWordsResponse){
+        return todayWordsResponse.stream()
+                .map(todayWord -> todayWord.getWord())
+                .collect(Collectors.toList());
     }
 }

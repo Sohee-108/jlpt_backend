@@ -27,9 +27,51 @@
             <a href="/logout">로그아웃</a>
         </div>
     <br><br>
-    <a href="/user">유저</a><br>
-    <a href="/oauth/loginInfo">OAuth2 로그인 정보</a>
-    <a href="/loginInfo">로그인 정보</a>
+
+    <p></p>
+
+    <div sec:authorize="isAuthenticated()">
+        <input type="text" id="count">
+        <button onclick="getTodayWords()">getTodayWords</button>
+        <div id="todayWords"></div>
+        <p></p>
+
+        <button onclick="getTodayTests()">getTodayTests</button>
+        <div id="todayTests"></div>
+        <p></p>
+
+        <input type="text" id="memorizeWordId">
+        <button onclick="memorize()">memorize 테스트 시 맞으면 호출</button>
+        <div id="memorize"></div>
+        <p></p>
+    </div>
 
     </body>
+    <script>
+        function getTodayWords(){
+            let count = document.querySelector("#count").value;
+            fetch("/api/words/"+count, { method: "GET" })
+            .then(result => { return result.json(); })
+            .then(data => {
+                document.querySelector("#todayWords").innerHTML = JSON.stringify(data);
+             });
+        }
+
+        function getTodayTests(){
+            fetch("/api/words/test", { method: "GET" })
+            .then(result => { return result.json(); })
+            .then(data => {
+                document.querySelector("#todayTests").innerHTML = JSON.stringify(data);
+             });
+        }
+
+        function memorize(){
+            let wordId = document.querySelector("#memorizeWordId").value;
+            fetch("/api/word/"+wordId+"/memorize", { method: "POST" })
+            .then(result => { return result.json(); })
+            .then(data => {
+                document.querySelector("#memorize").innerHTML = JSON.stringify(data);
+             });
+        }
+    </script>
 </html>
