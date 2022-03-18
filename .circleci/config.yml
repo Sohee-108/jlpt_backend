@@ -1,0 +1,67 @@
+
+version: 2.1
+orbs:
+  aws-s3: circleci/aws-s3@1.0.13
+  aws-code-deploy: circleci/aws-code-deploy@0.0.12
+
+jobs:
+  build:
+    docker:
+      - image: circleci/openjdk:11-jdk
+        environment:
+          DATABASE_URL: ${MY_POSTGRES_URL}
+
+    steps:
+      - checkout  # check out the code in the project directory
+      - run:
+          name: gradlew 권한 부여
+          command: chmod +x ./gradlew
+      - run:
+          name: gradle 빌드
+          command: ./gradlew build
+      - run:
+          name: 소스 압축
+          command: |
+            zip back.zip -r ./*
+            mkdir -p deploy
+            mv back.zip deploy/back.zip
+      - persist_to_workspace:
+          root: .
+          paths: deploy
+
+  deploy:
+    docker:
+      - image: circleci/python:2.7
+
+    steps:
+      - attach_workspace:
+          at: .
+
+      - aws-s3/copy:
+          from: deploy/*
+          to: 's3://ec2-s3-codedeploy'
+          aws-region: AWS_DEFAULT_REGION
+
+      - aws-code-deploy/deploy-bundle:
+          application-name: EC2CodeDeploy
+          deployment-group: JLPTGroup
+          deployment-config: CodeDeployDefault.AllAtOnce
+          bundle-bucket: ec2-s3-codedeploy
+          bundle-key: back # Travis CI와 다르게 확장자는 제거해야 합니다.
+          bundle-type: zip # default
+
+
+workflows:
+  version: 2.1
+
+  build-deploy:
+    jobs:
+      - build
+      - deploy:
+          context: aws
+          requires:
+            - build
+#          filters:
+#            branches:
+#              only: master
+

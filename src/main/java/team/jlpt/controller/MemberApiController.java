@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import team.jlpt.dto.MemberDTO;
 import team.jlpt.service.MemberService;
 
-
 @RestController
 @RequestMapping("/api/member")
 @RequiredArgsConstructor
@@ -59,5 +58,6 @@ public class MemberApiController {
         memberService.delete(memberId);
         return ResponseEntity.status(HttpStatus.OK).body(null);
     }
+
 }
 
