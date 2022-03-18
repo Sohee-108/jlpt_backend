@@ -15,7 +15,7 @@ jobs:
       - checkout  # check out the code in the project directory
       - run:
           name: chrome 다운로드
-          command: sudo apt-get install google-chrome-stable/google-chrome-stable_99.0.4844.74_amd64.deb
+          command: sudo apt-get install google-chrome-stable
       - run:
           name: chromedriver 다운로드
           command: wget -N https://chromedriver.storage.googleapis.com/99.0.4844.51/chromedriver_linux64.zip
