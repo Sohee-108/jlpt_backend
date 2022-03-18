@@ -1,6 +1,7 @@
 package team.jlpt.util;
 
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -15,6 +16,7 @@ import team.jlpt.entity.Problem;
 import java.util.*;
 
 @Component
+@Slf4j
 public class Crawling {
     private List<String> words;
     private WebDriver driver;
@@ -27,6 +29,7 @@ public class Crawling {
 
     public void init(List<String> words){
         this.words = words;
+        log.info("webdriver : " + webDriverValue);
         System.setProperty("webdriver.chrome.driver", webDriverValue);
 
         //속도개선
