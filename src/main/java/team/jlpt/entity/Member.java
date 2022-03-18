@@ -2,9 +2,13 @@ package team.jlpt.entity;
 
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import team.jlpt.dto.DictionaryDTO;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
 
 
 @Entity
@@ -25,11 +29,16 @@ public class Member {
     @Enumerated(EnumType.STRING)
     private Role role = Role.USER;
 
-    @CreationTimestamp
-    private Timestamp createTime;
+    private LocalDateTime createTime = LocalDateTime.now();
 
     private String provider;    //구글, 네이버, 카카오 oauth2로그인일때 채워짐
+
     private String providerId;
+
+    @Transient  //DB에 적용되지않음
+    @Setter
+    private List<DictionaryDTO.Response> todayWordsResponse;
+
 
     //api
     public Member(String name, String email, String password) {
