@@ -16,4 +16,47 @@ spring:
         show_sql: true
         format_sql: false
 
+  # google Login
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            clientId: ${MY_GOOGLE_CLIENTID}
+            clientSecret: ${MY_GOOGLE_CLIENTPASSWORD}
+            scope: email, profile
+
+          # kakao Login
+          kakao:
+            clientId: ${MY_KAKAO_CLIENTID}
+            cliendSecret: ${MY_KAKAO_CLIENTPASSWORD}
+            scope: profile_nickname, account_email
+            clientName: Kakao
+            authorizationGrantType: authorization_code
+            redirectUri: http://ec2-13-209-179-164.ap-northeast-2.compute.amazonaws.com/login/oauth2/code/kakao
+            clientAuthenticationMethod: POST
+
+          # naver Login
+          naver:
+            clientId: ${MY_NAVER_CLIENTID}
+            clientSecret: ${MY_NAVER_CLIENTPASSWORD}
+            scope: name, email
+            clientName: Naver
+            authorizationGrantType: authorization_code
+            redirectUri: http://ec2-13-209-179-164.ap-northeast-2.compute.amazonaws.com/login/oauth2/code/naver
+
+        # kakao Login
+        provider:
+          kakao:
+            authorizationUri: https://kauth.kakao.com/oauth/authorize
+            tokenUri: https://kauth.kakao.com/oauth/token
+            userInfoUri: https://kapi.kakao.com/v2/user/me
+            userNameAttribute: id
+          # naver Login
+          naver:
+            authorizationUri: https://nid.naver.com/oauth2.0/authorize
+            tokenUri: https://nid.naver.com/oauth2.0/token
+            userInfoUri: https://openapi.naver.com/v1/nid/me
+            userNameAttribute: response
+
 webdriver: ${MY_WEBDRIVER}
