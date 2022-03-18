@@ -2,11 +2,17 @@ package team.jlpt;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import team.jlpt.util.Crawling;
 
 import java.util.Arrays;
 
+@ActiveProfiles({"local"})
+@SpringBootTest
 public class CrawlingTest {
+    @Autowired private Crawling crawling;
 
 //    @Test
 //    void testExample(){
@@ -17,7 +23,6 @@ public class CrawlingTest {
     @Test
     void test(){
         String[] words = {"腕を磨く"};
-        Crawling crawling = new Crawling();
         crawling.init(Arrays.asList(words));
         Assertions.assertThat(crawling.getProblems().size()).isEqualTo(1);
     }

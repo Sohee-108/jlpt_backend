@@ -6,7 +6,6 @@ orbs:
 
 jobs:
   build:
-    working_directory: ~/project
     docker:
       - image: circleci/openjdk:11-jdk
         environment:
@@ -40,7 +39,7 @@ jobs:
       - run:
           name: 소스 압축
           command: |
-            zip back.zip -r ./*
+            zip back.zip -r ./* -x chromedriver -x chromedriver_linux64.xip
             mkdir -p deploy
             mv back.zip deploy/back.zip
       - persist_to_workspace:
