@@ -21,6 +21,10 @@ public class DictionaryService {
     private final DictionaryRepository dictionaryRepository;
     private Map<Long, List<String>> tempMemberMap = new HashMap<>();
 
+    /**
+     * 오늘의 단어 반환
+     * 회원별 데이터 저장
+     */
     public List<DictionaryDTO.Response> getTodayWords(Long memberId, Optional<Integer> optionalCount) {
         int count = 10;
         if(optionalCount.isPresent()){
@@ -34,6 +38,7 @@ public class DictionaryService {
         List<String> todayWordsString = todayWords.stream()
                 .map(todayWord -> todayWord.getWord())
                 .collect(Collectors.toList());
+
         tempMemberMap.put(memberId, todayWordsString);
         //추후 PrincipalDetails에 넣어서 회원별 오늘의 단어 관리
 
@@ -41,6 +46,9 @@ public class DictionaryService {
     }
 
 
+    /**
+     * 오늘의 단어 테스트 반환
+     */
     public List<Problem> getTodayTest(Long memberId) {
         List<String> words = tempMemberMap.get(memberId);
         crawling.init(words);

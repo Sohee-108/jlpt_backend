@@ -20,7 +20,10 @@ import java.util.Optional;
 public class DictionaryApiController {
     private final DictionaryService dictionaryService;
 
-    @GetMapping({"/words/{memberId}", "/words/{memberId}/{count}"})
+    /**
+     * 오늘의 단어 반환
+     */
+    @GetMapping({"/words/member/{memberId}", "/words/member/{memberId}/count/{count}"})
     public ResponseEntity todayWords(@PathVariable Long memberId,
                                      @PathVariable Optional<Integer> count
     ){
@@ -28,9 +31,14 @@ public class DictionaryApiController {
         return ResponseEntity.status(HttpStatus.OK).body(todayWords);
     }
 
-    @GetMapping("/test/{memberId}")
+    /**
+     * 오늘의 단어 테스트 반환
+     */
+    @GetMapping("/test/member/{memberId}")
     public ResponseEntity test(@PathVariable Long memberId){
         List<Problem> todayTest = dictionaryService.getTodayTest(memberId);
         return ResponseEntity.status(HttpStatus.OK).body(todayTest);
     }
+
+
 }
