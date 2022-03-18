@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: ${MY_POSTGRES_URL} #jdbc:postgresql://localhost:5432/jlpt
+    url: ${MY_POSTGRES_URL}
     username: ${MY_POSTGRES_USER}
     password: ${MY_POSTGRES_PASSWORD}
 
@@ -12,3 +12,5 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQL10Dialect
         show_sql: true
         format_sql: true
+
+webdriver: ${MY_WEBDRIVER}

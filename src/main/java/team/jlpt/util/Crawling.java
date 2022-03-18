@@ -8,6 +8,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import team.jlpt.entity.Problem;
 
@@ -20,10 +21,13 @@ public class Crawling {
     @Getter
     private List<Problem> problems = new ArrayList<>();
 
+    @Value("${webdriver}")
+    private String webDriverValue;
+
 
     public void init(List<String> words){
         this.words = words;
-        System.setProperty("webdriver.chrome.driver", "D:\\projectEn\\jlpt\\jlpt_backend\\chromedriver\\chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", webDriverValue);
 
         //속도개선
         ChromeOptions options = new ChromeOptions();
