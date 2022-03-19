@@ -36,6 +36,11 @@ public class Crawling {
         options.addArguments("headless");                       //브라우저 안띄움
         options.addArguments("--disable-gpu");
         options.addArguments("--blink-settings=imagesEnabled=false"); //이미지 다운 안받을거야.
+
+        //linux에서 동작하게끔
+        options.addArguments("no-sandbox");
+        options.addArguments("disable-dev-shm-usage");
+
         driver = new ChromeDriver(options);
 
         try{
