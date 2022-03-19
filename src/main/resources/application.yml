@@ -3,7 +3,7 @@ server:
 
 spring:
   datasource:
-    url: ${MY_POSTGRES_URL}
+    url: jdbc:postgresql://${MY_POSTGRES_HOST}:${MY_POSTGRES_PORT}/jlpt
     username: ${MY_POSTGRES_USER}
     password: ${MY_POSTGRES_PASSWORD}
 
