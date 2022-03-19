@@ -8,11 +8,32 @@
         <h1>회원가입 페이지</h1>
         <hr/>
 
-        <form action="/join" method="post">
+        <form method="post" id="joinForm">
             <input type="text" id="name" name="name" placeholder="Username"/><br>
             <input type="password" id="password" name="password" placeholder="password"/><br>
             <input type="email" id="email" name="email" placeholder="Email"/><br>
-            <button>회원가입</button>
+            <button type="button" onclick="join()">회원가입</button>
         </form>
     </body>
+    <script>
+        function join(){
+            let name = document.querySelector("#name").value;
+            let password = document.querySelector("#password").value;
+            let email = document.querySelector("#email").value;
+
+            fetch("/api/member", {
+                method: "POST",
+                headers: { "Content-Type":"application/json" },
+                body: JSON.stringify({
+                    name: name,
+                    email: email,
+                    password: password
+                })
+            })
+            .then(result => { return result.json(); })
+            .then(data => {
+                window.location.replace("/loginForm");
+             });
+        }
+    </script>
 </html>
