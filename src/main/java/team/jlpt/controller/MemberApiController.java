@@ -59,5 +59,8 @@ public class MemberApiController {
         return ResponseEntity.status(HttpStatus.OK).body(null);
     }
 
+
+
+
 }
 
